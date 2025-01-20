@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
         $_SESSION['usuario'] = $usu;
         $_SESSION['carrito'] = [];
         header("location: categorias.php");
-        return;
+        exit;
     }
 }
 ?>
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
     ?>
     <?php 
     if(isset($err) and $err == true){
-        echo "<p>Revise usuario y contraseña</p>";
+        echo "<p class=error>Revise usuario y contraseña</p>";
     }
     ?>
     <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
