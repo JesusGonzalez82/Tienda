@@ -26,7 +26,7 @@ comprobar_sesion();
     } else {
         echo "<ul>"; // Iniciamos la lista
         foreach ($categorias as $cat) {
-            $url = "productos.php?categoria=" . $cat['$codCat'];
+            $url = "productos.php?categoria=" . $cat['codCat'];
             echo "<li><a href='$url'>" . $cat['nombre'] . "</a></li>";
         }
         echo "</ul>";
