@@ -37,9 +37,9 @@ comprobar_sesion();
         <th>Peso</th><th>Stock</th><th>Comprar</th></tr>";
     foreach ($productos as $producto){
         $cod = $producto['CodProd'];
-        $nom = $producto['nombre'];
-        $des = $producto['descripcion'];
-        $peso = $producto['peso'];
+        $nom = $producto['Nombre'];
+        $des = $producto['Descripcion'];
+        $peso = $producto['Peso'];
         $unidades = $_SESSION['carrito'][$cod];
         echo "<tr><td>$nom</td><td>$des</td><td>$des/td><td>$peso</td><td>$unidades</td>
         <td>

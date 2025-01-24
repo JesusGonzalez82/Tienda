@@ -102,7 +102,7 @@ function insertar_pedido($carrito, $codRes){
     $bd->beginTransaction();
     $hora = date("Y-m-d H:i:s", time());
     // insertamos el pedido
-    $sql = "insert into pedidos(fecha, enviado, restaurante) values ('$hora', 0, '$codRes)";
+    $sql = "insert into pedidos(fecha, enviado, restaurante) values ('$hora', 0, '$codRes')";
     $resul = $bd->query($sql);
     if(!$resul){
         return FALSE;

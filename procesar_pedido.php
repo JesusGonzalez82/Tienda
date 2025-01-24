@@ -7,7 +7,7 @@
 
 <?php
 
-require '..\correo\enviar_correo.php';
+require 'correo.php';
 require 'sesiones.php';
 require_once 'bd.php';
 comprobar_sesion();
@@ -32,13 +32,12 @@ comprobar_sesion();
         echo "No se ha podido realizar el pedido";
     } else {
         $correo = $_SESSION['usuario']['correo'];
-        echo "Pedido realizado correctamente <br>";
-        // vaciamos el carrito
-        $compra = $_SESSION['carrito'];
+        echo "Pedido realizado correctamente. Se enviará un correo de confirmación a: $correo";
+        $conf = enviar_correos($_SESSION['carrito'], $resul, $correo);
+        if ($conf !== TRUE){
+            echo "Error al enviar: $conf <br>";
+        }
         $_SESSION['carrito'] = [];
-        echo "Pedido realizado con exito.
-        Se enviará un correo de confirmación a: $correo ";
-        enviar_correos($compra, $pedido, $correo);
     }
 
     ?>
