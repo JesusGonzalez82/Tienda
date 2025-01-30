@@ -16,4 +16,10 @@
  }else {
     $_SESSION['carrito'][$cod] = $unidades;
  }
- header("location: carrito.php");
+//  header("location: carrito.php");
+/* 
+EJERCICIO 1 PAGINA 123
+Al añadir un producto, la aplicacion redirige al carrito. Modificala para que redirija a 
+la tabla productos, con la misma categoria.
+*/
+header("location:" .$_SERVER['HTTP_REFERER']);

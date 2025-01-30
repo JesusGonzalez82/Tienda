@@ -18,4 +18,4 @@
     <p>La sesion se cerró correctamente</p>
     <a href="login.php">Ir a la página de login</a>
 </body>
-</html>l
+</html>

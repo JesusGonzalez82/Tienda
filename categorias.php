@@ -17,6 +17,7 @@ comprobar_sesion();
 
 <body>
     <?php require "cabecera.php"; ?>
+    <h1>Lista de categorías</h1>
     <!-- Lista de categorias -->
     <?php
 

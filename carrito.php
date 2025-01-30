@@ -25,7 +25,7 @@ comprobar_sesion();
     <?php
 
     require 'cabecera.php';
-    echo '<h2>Carrito de la compra</h2>';
+    // echo '<h2>Carrito de la compra</h2>';
     $productos = cargar_productos(array_keys($_SESSION['carrito']));
     if ($productos === FALSE){
         echo "<p>No hay productos en el pedido</p>";
