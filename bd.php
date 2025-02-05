@@ -84,6 +84,7 @@ function cargar_productos($codigosProductos){
     $res = leer_config(dirname(__FILE__)."/configuracion.xml", dirname(__FILE__)."/configuracion.xsd");
     $bd = new PDO($res[0], $res[1], $res[2]);
     $texto_in = implode(",", $codigosProductos);
+    if ($texto_in === '') return FALSE;
     $ins = "select * from productos where codProd in ($texto_in)";
     $resul = $bd-> query($ins);
     if (!$resul){
@@ -120,4 +121,16 @@ function insertar_pedido($carrito, $codRes){
     }
     $bd->commit();
     return $pedido;
+}
+
+function cargar_restaurante(){
+    $res = leer_config(dirname(__FILE__)."/configuracion.xml", dirname(__FILE__)."/configuracion.xsd");
+    $bd = new PDO($res[0], $res[1], $res[2]);
+    $ins = "select * from restaurantes";
+    $resul = $bd-> query($ins);
+    if (!$resul){
+        return FALSE;
+    }
+    return $resul;
+
 }

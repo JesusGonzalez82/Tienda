@@ -15,6 +15,7 @@
         <a href="categorias.php">Home</a>
         <a href="carrito.php">Carrito</a>
         <a href="logout.php">Cerrar sesion</a>
+        <a href="preferencias.php">Preferencias</a>
     </header>
 </body>
 </html>
