@@ -19,6 +19,28 @@ function leer_config($nombre, $esquema){
     return $resul;
 }
 
+function leer_servidor($nombre, $esquema){
+    $config = new DOMDocument();
+    $config->load($nombre);
+    $res = $config->schemaValidate($esquema);
+    if ($res === FALSE){
+        throw new InvalidArgumentException("Revise el fichero de configuración");
+    }
+    $datos = simplexml_load_file($nombre);
+
+    $SMTPAuth= $datos->xpath("//SMTPAuth");
+    $SMTPSecure= $datos->xpath("//SMTPSecure");
+    $Host= $datos->xpath("//Host");
+    $Port= $datos->xpath("//Port");
+    $Username= $datos->xpath("//Username");
+    $Password= $datos->xpath("//Password");
+
+    $resul = [$SMTPAuth, $SMTPSecure, $Host, $Port, $Username, $Password];
+
+    return $resul;
+}
+
+
 function comprobar_usuario($nombre, $clave){
     $res = leer_config(dirname(__FILE__)."/configuracion.xml", dirname(__FILE__)."/configuracion.xsd");
     $bd = new PDO($res[0], $res[1], $res[2]);
@@ -64,7 +86,11 @@ function cargar_categoria($codCat){
 function cargar_productos_categoria($codCat){
     $res = $res = leer_config(dirname(__FILE__)."/configuracion.xml", dirname(__FILE__)."/configuracion.xsd");
     $bd = new PDO($res[0], $res[1], $res[2]);
-    $sql = "select * from productos where codcat = $codCat";
+    /*
+    EJERCICIO 3 PAGINA 123. Modificamos la tabla productos para que no muestre
+    los productos sin stock.
+    */
+    $sql = "select * from productos where codcat = $codCat and stock > 0";
     $resul = $bd ->query($sql);
     if (!$resul){
         return FALSE;
