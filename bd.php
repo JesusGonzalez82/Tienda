@@ -44,14 +44,16 @@ function leer_servidor($nombre, $esquema){
 function comprobar_usuario($nombre, $clave){
     $res = leer_config(dirname(__FILE__)."/configuracion.xml", dirname(__FILE__)."/configuracion.xsd");
     $bd = new PDO($res[0], $res[1], $res[2]);
-    $ins = "select codRes, correo from restaurantes where correo = '$nombre'
-            and clave = '$clave'";
+    $ins = "select codRes, correo, clave from restaurantes where correo = '$nombre'";
     $resul = $bd ->query($ins);
     if ($resul -> rowCount() === 1){
-        return $resul->fetch();
+        $datos = $resul->fetch();
+        if (password_verify($clave,$datos['clave'])){
+        return $datos;
     }else {
         return FALSE;
     }
+    }return false;
 }
 
 function cargar_categorias(){
@@ -157,6 +159,33 @@ function cargar_restaurante(){
     if (!$resul){
         return FALSE;
     }
+    if ($resul->rowCount()===0){
+        return FALSE;
+    }
+    return $resul;
+}
+
+function actualizar_restaurante($datos){
+    $res = leer_config(dirname(__FILE__)."/configuracion.xml", dirname(__FILE__)."/configuracion.xsd");
+    $bd = new PDO($res[0], $res[1], $res[2]);
+    $preparada = $bd->prepare("UPDATE restaurantes SET
+        Correo = :correo,
+        -- Clave = :clave,
+        Pais = :pais,
+        CP = :cp,
+        Ciudad = :ciudad,
+        Direccion = :direccion
+        WHERE CodRes = :codres");
+    $resul = $preparada->execute($datos);
+    return $resul;
+}
+
+function insertar_restaunrate($datos){
+    $res = leer_config(dirname(__FILE__)."/configuracion.xml", dirname(__FILE__)."/configuracion.xsd");
+    $bd = new PDO($res[0], $res[1], $res[2]);
+    $preparada = $bd->prepare("INSERT INTO restaurantes(Correo, Pais, Cp, Ciudad, Direccion, Clave) Values (:correo, :pais, :cp, :ciudad, :direccion, :clave)");
+    $datos[':clave']=password_hash($datos[':clave'], PASSWORD_BCRYPT);
+    $resul = $preparada->execute($datos);
     return $resul;
 
 }
