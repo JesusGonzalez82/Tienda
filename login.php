@@ -13,8 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
     }else{
         session_start();
         $_SESSION['usuario'] = $usu;
-        $_SESSION['carrito'] = [];
-        header("location: categorias.php");
+        $_SESSION['carrito'] = (array) json_decode(leer_cookie('carrito'));
+        header("location:". leer_cookie("pagina_inicio", "categorias.php"));
         exit;
     }
 }

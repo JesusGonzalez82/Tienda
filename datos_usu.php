@@ -64,7 +64,7 @@ comprobar_sesion();
 
     <?php
     if ($_SERVER['REQUEST_METHOD'] == "GET" && $_GET!=null){
-        $insertado = insertar_restaunrate($_GET);
+        $insertado = insertar_restaurante($_GET);
         if ($insertado == TRUE){
             echo "<p>Datos insertados correctamente</p>";
         }else{

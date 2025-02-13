@@ -11,5 +11,8 @@ if (isset($_SESSION['carrito'][$cod])){
     if($_SESSION['carrito'][$cod] <= 0){
         unset($_SESSION['carrito'][$cod]);
     }
+    if (isset($_COOKIE['carrito'])){
+        setcookie('carrito', json_encode($_SESSION['carrito']), time()+3600*24);
+      }
 }
 header("location: carrito.php");

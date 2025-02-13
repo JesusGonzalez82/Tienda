@@ -16,6 +16,11 @@
  }else {
     $_SESSION['carrito'][$cod] = $unidades;
  }
+
+ if (isset($_COOKIE['carrito'])){
+   setcookie('carrito', json_encode($_SESSION['carrito']), + time()+3600*24);
+ }
+ 
 //  header("location: carrito.php");
 /* 
 EJERCICIO 1 PAGINA 123

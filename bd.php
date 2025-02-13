@@ -92,7 +92,7 @@ function cargar_productos_categoria($codCat){
     EJERCICIO 3 PAGINA 123. Modificamos la tabla productos para que no muestre
     los productos sin stock.
     */
-    $sql = "select * from productos where codcat = $codCat and stock > 0";
+    $sql = "select * from productos where codcat = $codCat and stock >= " . leer_cookie('stock',0);
     $resul = $bd ->query($sql);
     if (!$resul){
         return FALSE;
@@ -170,7 +170,7 @@ function actualizar_restaurante($datos){
     $bd = new PDO($res[0], $res[1], $res[2]);
     $preparada = $bd->prepare("UPDATE restaurantes SET
         Correo = :correo,
-        -- Clave = :clave,
+        Clave = :clave,
         Pais = :pais,
         CP = :cp,
         Ciudad = :ciudad,
@@ -180,12 +180,19 @@ function actualizar_restaurante($datos){
     return $resul;
 }
 
-function insertar_restaunrate($datos){
+function insertar_restaurante($datos){
     $res = leer_config(dirname(__FILE__)."/configuracion.xml", dirname(__FILE__)."/configuracion.xsd");
     $bd = new PDO($res[0], $res[1], $res[2]);
     $preparada = $bd->prepare("INSERT INTO restaurantes(Correo, Pais, Cp, Ciudad, Direccion, Clave) Values (:correo, :pais, :cp, :ciudad, :direccion, :clave)");
     $datos[':clave']=password_hash($datos[':clave'], PASSWORD_BCRYPT);
     $resul = $preparada->execute($datos);
     return $resul;
+}
 
+function leer_cookie($nombre_cookie, $valor_defecto = FALSE){
+    if (!isset($_COOKIE[$nombre_cookie])){
+        return $valor_defecto;
+    }else {
+        return $_COOKIE[$nombre_cookie];
+    }
 }
